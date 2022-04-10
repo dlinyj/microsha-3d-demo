@@ -1,9 +1,9 @@
-monitor_putc equ 0f809h
-monitor_puts equ 0f818h
-monitor_hexb equ 0f815h
-monitor equ 0f86ch
+monitor_putc equ 0f809h	;Радио_86РК Вывод символа на экран	
+monitor_puts equ 0f818h	;Радио_86РК  Вывод на экран текстовой строки	
+monitor_hexb equ 0f815h	;Радио_86РК Вывод на экран 16-ричного числа	
+monitor equ 0f86ch		;Радио_86РК ? 
 
-video_area equ 76d0h
+video_area equ 76d0h	;ОЗУ. Видеопамять
 video_area_end equ video_area + (78*30)
 
   org 0h
@@ -18,16 +18,16 @@ initial_frame_loop:
   mov a, m
   cpi 'X'
   jnz initial_frame_blank
-  mvi a, 7fh
+  mvi a, 17h
 initial_frame_blank:
   stax d
   inx h
   inx d
   mov a, d
-  cpi HIGH(video_area_end)
+  cpi hi(video_area_end)
   jnz initial_frame_loop
   mov a, e
-  cpi LOW(video_area_end)
+  cpi lo(video_area_end)
   jnz initial_frame_loop
 
 next_frame:
@@ -53,7 +53,7 @@ frame_loop:
   inx h
   ldax d
   cpi ' '
-  mvi a, 7fh
+  mvi a, 17h
   jz frame_loop_1
   mvi a, ' '
 frame_loop_1:
@@ -75,4 +75,4 @@ debug_hl:
   pop psw
   ret
 
-  include "frames.asm"
+  include "generator/frames.asm"
