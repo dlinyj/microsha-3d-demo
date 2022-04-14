@@ -50,4 +50,4 @@ for strok in im:
 			print(' ', end ='')
 		else:
 			print('X', end ='')
-	print('"\n', end ='')
+	print('",\n', end ='')
